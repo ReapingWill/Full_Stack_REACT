@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function TransactionCard(){
     const navigate = useNavigate();
-    const handleClick = () => navigate('./TransactionForm')
+    const handleClick = () => navigate('./TransactionManagement')
     return(
         <div className='Cards'>
             <h2>Transaction Page</h2>

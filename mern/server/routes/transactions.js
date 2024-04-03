@@ -1,10 +1,10 @@
 const express = require("express");
-const agentSchema = require('../db/schemas/agentSchema')
+const transactionSchema = require('../db/schemas/transactionSchema')
  
-// recordRoutes is an instance of the express router.
+// transactionRoutes is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
-const recordRoutes = express.Router();
+const transactionRoutes = express.Router();
  
 // This will help us connect to the database
 const dbo = require("../db/conn");
@@ -14,10 +14,10 @@ const ObjectId = require("mongodb").ObjectId;
  
  
 // This section will help you get a list of all the records.
-recordRoutes.route("/record").get(function (req, res) {
+transactionRoutes.route("/transactions").get(function (req, res) {
  let db_connect = dbo.getDb("Codeboxx");
  db_connect
-   .collection("agents")
+   .collection("transactions")
    .find({})
    .toArray(function (err, result) {
      if (err) throw err;
@@ -26,11 +26,11 @@ recordRoutes.route("/record").get(function (req, res) {
 });
  
 // This section will help you get a single record by id
-recordRoutes.route("/agents/:id").get(function (req, res) {
+transactionRoutes.route("/transactions/:id").get(function (req, res) {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
  db_connect
-   .collection("agents")
+   .collection("transactions")
    .findOne(myquery, function (err, result) {
      if (err) throw err;
      res.json(result);
@@ -38,38 +38,35 @@ recordRoutes.route("/agents/:id").get(function (req, res) {
 });
  
 // This section will help you create a new record.
-recordRoutes.route("/record/add").post(function (req, response) {
+transactionRoutes.route("/transactions/add").post(function (req, response) {
  let db_connect = dbo.getDb();
  let myobj = {
    first_name: req.body.first_name,
    last_name: req.body.last_name,
-   region: req.body.region,
-   rating: req.body.rating,
-   fee: req.body.fee,
-   amount: req.body.fee,
-   date:new Date()
+   amount: req.body.amount,
+   date: new Date()
+   
  };
- db_connect.collection("agents").insertOne(myobj, function (err, res) {
-   if (err) throw err;
+ db_connect.collection("transactions").insertOne(myobj, function (err, res) {
+   if (err) throw console.error(err.toString()) ;
    response.json(res);
  });
 });
  
 // This section will help you update a record by id.
-recordRoutes.route("/update/:id").post(function (req, response) {
+transactionRoutes.route("/update/:id").post(function (req, response) {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
  let newvalues = {
    $set: {
      first_name: req.body.first_name,
      last_name: req.body.last_name,
-     region: req.body.region,
-     rating: req.body.rating,
-     fee: req.body.fee,
+     amount: req.body.amount,
+     date:new Date()
    },
  };
  db_connect
-   .collection("agents")
+   .collection("transactions")
    .updateOne(myquery, newvalues, function (err, res) {
      if (err) throw err;
      console.log("1 document updated");
@@ -78,14 +75,14 @@ recordRoutes.route("/update/:id").post(function (req, response) {
 });
  
 // This section will help you delete a record
-recordRoutes.route("/:id").delete((req, response) => {
+transactionRoutes.route("/:id").delete((req, response) => {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
- db_connect.collection("agents").deleteOne(myquery, function (err, obj) {
+ db_connect.collection("transactions").deleteOne(myquery, function (err, obj) {
    if (err) throw err;
    console.log("1 document deleted");
    response.json(obj);
  });
 });
  
-module.exports = recordRoutes;
+module.exports = transactionRoutes;

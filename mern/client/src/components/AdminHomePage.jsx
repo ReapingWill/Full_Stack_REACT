@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import AgentCard from './AgentCard'
-import TransactionCard from './TransactionCard'
+import AgentCard from './agents/AgentCard.jsx'
+import TransactionCard from './transaction/TransactionCard.jsx'
 
 const AdminHomePage = () => {
  return (
@@ -14,9 +14,8 @@ const AdminHomePage = () => {
         <Col>
           <AgentCard/>
         </Col>
-          <TransactionCard/>
         <Col>
-          
+        <TransactionCard/>
         </Col>
       </Row>
     </Container>

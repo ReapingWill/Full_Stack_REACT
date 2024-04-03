@@ -15,11 +15,11 @@ function Login() {
     const navigate = useNavigate();
     const { updateLoginStatus } = useAuth();
 
-    useEffect(() => {
+    /*useEffect(() => {
         return () => {
           setShowToast(false);
         };
-     }, []);
+     }, []);*/
     
     const handleSubmit = async (e) => {
         e.preventDefault();

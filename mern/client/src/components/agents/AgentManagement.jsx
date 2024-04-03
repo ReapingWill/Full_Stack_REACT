@@ -72,6 +72,7 @@ export default function RecordList() {
    <Container>
       <Row>
         <Col>
+        <Card>
           <h3>Agent List</h3>
           <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>
@@ -85,6 +86,7 @@ export default function RecordList() {
           </thead>
           <tbody>{recordList()}</tbody>
           </table>
+          </Card>
       </Col>
       <Col>
       <Card>

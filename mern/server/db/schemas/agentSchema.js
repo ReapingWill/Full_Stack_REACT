@@ -31,6 +31,16 @@ const AgentSchema = new mongoose.Schema({
         min: 0
     },
   
+    amount: {
+        type: Number,
+        min: 0,
+        required: true
+    },
+
+    date:{
+        type: Date,
+        required: true
+    },
 }, { timestamps: true })
 
 
