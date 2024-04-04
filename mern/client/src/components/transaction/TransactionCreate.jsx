@@ -70,7 +70,8 @@ export default function NewTransaction({onNewTransaction}) {
        <div className="form-group">
          <label htmlFor="amount">Amount</label>
          <input
-           type="text"
+           type="number"
+           min='0'
            className="form-control"
            id="amount"
            value={form.amount}
@@ -81,7 +82,7 @@ export default function NewTransaction({onNewTransaction}) {
          <input
            type="submit"
            value="Create Transaction"
-           className="btn btn-primary"
+           className="btn btn-primary submit-btn"
          />
        </div>
      </form>

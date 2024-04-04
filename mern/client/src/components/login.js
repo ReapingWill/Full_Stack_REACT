@@ -70,7 +70,6 @@ function Login() {
                 </form>
                 
             </div>
-            <ToastComponent show={showToast} message={toastMessage} variant={toastType} />
         </div>
     )
 }

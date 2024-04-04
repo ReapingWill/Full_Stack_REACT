@@ -9,6 +9,8 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import NewTransaction from './TransactionCreate'
 
+
+
 function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
@@ -24,6 +26,7 @@ const Transactions = ( props ) => (
 );
   
 export default function TransactionsList() {
+  const [refresh, setRefresh] = useState(false);
  const [transactions, setTransactions] = useState([]);
   // This method fetches the records from the database.
  useEffect(() => {
@@ -40,11 +43,12 @@ export default function TransactionsList() {
    }
     getTransactions();
     return;
-}, []);
+}, [refresh]);
 
 // Callback function to handle new transactions
 const handleNewTransaction = (newTransaction) => {
   setTransactions([newTransaction, ...transactions]);
+  setRefresh(!refresh);
 };
 
 // This method will map out the transactions on the table
