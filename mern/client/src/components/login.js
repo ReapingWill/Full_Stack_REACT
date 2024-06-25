@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 import { useAuth } from '../AuthContext';
 import ToastComponent from './Toasts';
+import { useCookies } from 'react-cookie';
 
 
 function Login() {
@@ -14,6 +15,7 @@ function Login() {
     const [toastType, setToastType] = useState('');
     const navigate = useNavigate();
     const { updateLoginStatus } = useAuth();
+    const [cookies, setCookie] = useCookies(['users']);
 
     /*useEffect(() => {
         return () => {
@@ -27,11 +29,17 @@ function Login() {
             const response = await axios.post('http://localhost:5000/login',{email, password})
             console.log(response);
             if (response.data.success){
+                const TOKEN = await axios.post(`http://localhost:5000/session/${response.data.id}`)
+                const token = TOKEN.data.data.token;
+                setCookie('user', token, {path: '/'});
+                console.log(TOKEN)
+                console.log(token)
                 setToastMessage('Successful Login.');
                 setToastType('success');
                 setShowToast(true);
                 updateLoginStatus(true);
-                navigate('/')
+                navigate('/AdminHomePage')
+                
             }else {
                 setToastMessage('Login Failed.');
                 setToastType('danger');

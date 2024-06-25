@@ -7,15 +7,19 @@ import Col from 'react-bootstrap/Col';
 import AgentCard from './agents/AgentCard.jsx'
 import TransactionCard from './transaction/TransactionCard.jsx'
 
-const AdminHomePage = () => {
+const AdminHomePage = ({userData,userId}) => {
  return (
     <Container>
       <Row>
         <Col>
-          <AgentCard/>
+          <AgentCard
+            userData={userData}
+            userId={userId}/>
         </Col>
         <Col>
-        <TransactionCard/>
+        <TransactionCard
+          userData={userData}
+          userId={userId}/>
         </Col>
       </Row>
     </Container>

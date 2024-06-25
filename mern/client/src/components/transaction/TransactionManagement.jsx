@@ -25,7 +25,7 @@ const Transactions = ( props ) => (
   </tr>
 );
   
-export default function TransactionsList() {
+export default function TransactionsList(userData,userId) {
   const [refresh, setRefresh] = useState(false);
  const [transactions, setTransactions] = useState([]);
   // This method fetches the records from the database.

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 
-function TransactionCard(){
+function TransactionCard({userData,userId}){
     const navigate = useNavigate();
     const handleClick = () => navigate('./TransactionManagement')
     return(
