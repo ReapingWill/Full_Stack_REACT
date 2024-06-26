@@ -7,13 +7,14 @@ import { NavLink } from "react-router-dom";
  import rocketLogo from '../images/rocketLogo.png';
  import ToastComponent from './Toasts';
  
-export default function Navbar() {
+export default function Navbar({userData,userId}) {
  return (
    <div>
      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-       <NavLink className="navbar-brand" to="/">
+       <NavLink className="navbar-brand" to="/AdminHomePage" >
        <img style={{"width" : 20 + '%'}} src={rocketLogo} alt=""></img>
        </NavLink>
+
        <button
          className="navbar-toggler"
          type="button"
