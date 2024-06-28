@@ -32,8 +32,8 @@ function Login() {
                 const TOKEN = await axios.post(`http://localhost:5000/session/${response.data.id}`)
                 const token = TOKEN.data.data.token;
                 setCookie('user', token, {path: '/'});
-                console.log(TOKEN)
-                console.log(token)
+                console.log('This is the BIG',TOKEN)
+                console.log('This is the small',token)
                 setToastMessage('Successful Login.');
                 setToastType('success');
                 setShowToast(true);

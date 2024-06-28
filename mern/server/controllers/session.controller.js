@@ -1,3 +1,4 @@
+
 const DBO = require('../db/conn.js') ;
 const { ObjectId } = require('mongodb') ;
 const uuidv4 = require('uuid').v4;
@@ -25,7 +26,8 @@ const createSession = async (req,res) => {
     let db_connect = DBO.getDb();
     try {
         const COLLECTION = db_connect.collection("session");
-        const { id } = req.params;
+        const id  = req.params.id;
+        console.log("this is my id", id)
         const session_token = uuidv4();
 
         await COLLECTION.createIndex({ "createdAt": 1 }, { expireAfterSeconds: 86400 });
@@ -62,17 +64,17 @@ const validateToken = async (req, res) => {
         if (!SESSION) {return res.json({ status: 'error', data: null, message: 'Invalid session token'});}
 
         const USER = await db_connect.collection("users").findOne({_id: new ObjectId(SESSION.user) });
-        if (!USER) {return res.json({status: 'error', data:null, message: 'Invalid user session' });}
+        if (!USER) {return res.json({status: 'error', data:'', message: 'Invalid USER session' });}
 
-        const {_id, email} = USER;
+        const {_id, first_name, last_name} = USER;
 
-        console.log("TokenUUID valideated")
+        console.log("TokenUUID validated")
         res.json({
-            status: 'ok',
             data: {
                 valid: true,
-                user: {id: _id, email},
-                message: null
+                user: {first_name, last_name,id: _id, },
+                message: null,
+                status: 'ok'
             }
         });
     } catch (error) {

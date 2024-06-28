@@ -22,7 +22,8 @@ function App() {
  const [cookies] = useCookies(['user']);
  const [userData, setUserData] = useState({
   userId:'',
-  email:''
+  firstName:'',
+  lastName:''
  })
 
  useEffect(() => {
@@ -30,7 +31,7 @@ function App() {
      try {
        const token = await axios.get(`http://localhost:5000/validate_token?token=${cookies.user}`);
        console.log(token);
-       const status = token.data.status
+       const status = token.data.data.status
        console.log(status)
 
        console.log("token.data.data.user", token)
@@ -38,7 +39,8 @@ function App() {
 
        setUserData({
          userId:userInfo.id,
-         email:userInfo.email,
+         firstName:userInfo.first_name,
+         lastName:userInfo.last_name
        })
 
        setUserId(userInfo.id)
@@ -68,11 +70,11 @@ function App() {
           <Routes> 
             <Route exact path='/' element={<Login />}/>
 
-            <Route exact path="/AgentManagement" element={<AgentManagement
+            <Route exact path="AdminHomePage/AgentManagement" element={<AgentManagement
               userData={userData}
               userId={userId} /> } />
 
-            <Route exact path="/TransactionManagement" element={<TransactionManagement
+            <Route exact path="AdminHomePage/TransactionManagement" element={<TransactionManagement
               userData={userData}
               userId={userId} />} />
 

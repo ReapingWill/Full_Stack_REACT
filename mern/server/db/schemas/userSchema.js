@@ -12,6 +12,14 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     required: true,
  },
+ first_name: {
+   type: String,
+   trim: true,  
+},
+last_name: {
+   type: String,
+   trim: true, 
+}
 });
 
 // Pre-save hook to hash the password before saving
