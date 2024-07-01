@@ -23,7 +23,7 @@ import { useParams, useNavigate } from "react-router";
       const record = await response.json();
      if (!record) {
        window.alert(`Record with id ${id} not found`);
-       navigate("/");
+       navigate("/AdminHomePage/AgentManagement");
        return;
      }
       setForm(record);

@@ -5,11 +5,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import { NavLink } from "react-router-dom";
  // Here, we display our Navbar
  import rocketLogo from '../images/rocketLogo.png';
- import ToastComponent from './Toasts';
+
  
-export default function Navbar({userData,userId}) {
+export default function Navbar() {
  return (
-   <div>
+   <div className="Navbar">
      <nav className="navbar navbar-expand-lg navbar-light bg-light">
        <NavLink className="navbar-brand" to="/AdminHomePage" >
        <img style={{"width" : 20 + '%'}} src={rocketLogo} alt=""></img>
