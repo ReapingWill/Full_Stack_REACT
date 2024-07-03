@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
-import { Toast, ToastContainer } from 'react-bootstrap';
+import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
-function LoginToast({ showToast, message, variant, onClose }) {
+export default function ToastNotification(){
+  const notify = () => toast("Wow so easy !");
+
   return (
-    <ToastContainer position="top-center">
-      <Toast onClose={()=>{}} show={showToast} delay={5000} autohide variant={variant}>
-        <Toast.Header>
-          <strong className="me-auto">Login Status</strong>
-        </Toast.Header>
-        <Toast.Body className={variant === 'danger' ? 'text-white' : ''}>
-          {message}
-        </Toast.Body>
-      </Toast>
-    </ToastContainer>
+    <div>
+      <button onClick={notify}>Notify !</button>
+      <ToastContainer />
+    </div>
   );
 }
-
-export default LoginToast;
 

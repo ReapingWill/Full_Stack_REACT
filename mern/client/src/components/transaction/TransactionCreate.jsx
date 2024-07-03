@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
-export default function NewTransaction({onNewTransaction}) {
+export default function NewTransaction({onNewTransaction,userData,userId}) {
  const [form, setForm] = useState({
    first_name: "",
    last_name: "",

@@ -29,7 +29,7 @@ const login = (app) => {
     
       if(user){
         if(user.password === password) {
-          res.json({ success: true, message: 'Login Successful' });
+          res.json({ success: true, message: 'Login Successful',id:user._id });
         }else{
           res.json({ success: false, message: 'The password is incorrect' });
         }

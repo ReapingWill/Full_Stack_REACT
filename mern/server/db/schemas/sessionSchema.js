@@ -1,12 +1,17 @@
 const mongoose = require('mongoose')
-const User = require('./userSchema.js')
+
 
 const SessionSchema = new mongoose.Schema({
     session_token: {
-        type: String
+        type: String,
+        trim: true
     }, 
     
-    user: {User,schema},
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    
+    },
 
     
   

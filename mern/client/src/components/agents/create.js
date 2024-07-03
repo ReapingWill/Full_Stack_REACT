@@ -1,6 +1,35 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { Modal, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+
 export default function Create() {
+
+  const NotifySuccess = () => toast.success("Agent Created", {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: false,
+    progress: undefined,
+    theme: "colored",
+    });
+const NotifyFail = () => toast.error("Failed To Create Agent",{
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: false,
+    progress: undefined,
+    theme: "colored",
+    });
+
+
+
+
+
  const [form, setForm] = useState({
    first_name: "",
    last_name: "",
@@ -19,6 +48,7 @@ export default function Create() {
  async function onSubmit(e) {
    e.preventDefault();
     // When a post request is sent to the create url, we'll add a new record to the database.
+    try{
    const newPerson = { ...form };
     await fetch("http://localhost:5000/record/add", {
      method: "POST",
@@ -27,12 +57,14 @@ export default function Create() {
      },
      body: JSON.stringify(newPerson),
    })
-   .catch(error => {
+   NotifySuccess();
+  }catch(error){
+    NotifyFail();
      window.alert(error);
      return;
-   });
+   };
     setForm({ first_name: "", last_name: "", region: "", rating: "", fee: "" });
-   navigate("/");
+   navigate("/AdminHomePage");
  }
   // This following section will display the form that takes the input from the user.
  return (

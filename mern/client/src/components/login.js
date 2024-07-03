@@ -3,23 +3,39 @@ import {  useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 import { useAuth } from '../AuthContext';
-import ToastComponent from './Toasts';
+import { useCookies } from 'react-cookie';
+import { toast } from 'react-toastify';
 
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showToast, setShowToast] = useState(false);
-    const [toastMessage, setToastMessage] = useState('');
-    const [toastType, setToastType] = useState('');
     const navigate = useNavigate();
     const { updateLoginStatus } = useAuth();
+    const [cookies, setCookie] = useCookies(['users']);
 
-    /*useEffect(() => {
-        return () => {
-          setShowToast(false);
-        };
-     }, []);*/
+    const NotifySuccess = () => toast.success("Successfully logged in!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+        });
+    const NotifyFail = () => toast.error("Login Failed",{
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+        });
+    
+
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,22 +43,21 @@ function Login() {
             const response = await axios.post('http://localhost:5000/login',{email, password})
             console.log(response);
             if (response.data.success){
-                setToastMessage('Successful Login.');
-                setToastType('success');
-                setShowToast(true);
+                const TOKEN = await axios.post(`http://localhost:5000/session/${response.data.id}`)
+                const token = TOKEN.data.data.token;
+                setCookie('user', token, {path: '/'});
+                //console.log('This is the BIG',TOKEN)
+                //console.log('This is the small',token)
                 updateLoginStatus(true);
-                navigate('/')
+                NotifySuccess();
+                navigate('/AdminHomePage')
+                
             }else {
-                setToastMessage('Login Failed.');
-                setToastType('danger');
-                setShowToast(true);
+                NotifyFail();
                 updateLoginStatus(false);
                 navigate('/unauthorized');
             }
         } catch (error) {
-            setToastMessage('Login Failed.');
-            setToastType('danger');
-            setShowToast(true);
             console.log(error);
             updateLoginStatus(false);
             navigate('/unauthorized');
